@@ -95,7 +95,7 @@ node {
 
                                              {
 
-                                                            rmsg = sh returnStatus: true, script: "${toolbelt} force:mdapi:deploy -d manifest/. -u ${HUB_ORG}"
+                                                            rmsg = sh returnStatus: true, script: "${toolbelt} force:source:deploy -p force-app -u ${HUB_ORG} -c"
 
                                              }
 
@@ -104,7 +104,7 @@ node {
                                              {
 
                                                            
-                                                           rmsg = bat returnStatus: true, script: "\"${toolbelt}\" force:source:deploy -p force-app -u ${HUB_ORG}"
+                                                           rmsg = bat returnStatus: true, script: "\"${toolbelt}\" force:source:deploy -p force-app -u ${HUB_ORG} -c"
 
                                              }
                                              if(rmsg != 0)
@@ -116,7 +116,6 @@ node {
                                                   println rmsg
                                                    
                                              }
-                                             println dStatus
                                              println('Hello from a job DSL script')
 
                                              println(rmsg)
