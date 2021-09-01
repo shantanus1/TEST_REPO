@@ -1,11 +1,11 @@
 name: Salesforce Integration from GitHub
 on:
   push:
-    branches: [ feature/shan1 ]
+    branches: [ SIT_ORG ]
     paths: 
       - 'manifest/**'
   pull_request:
-    branches: [ feature/shan1 ]
+    branches: [ SIT_ORG ]
     paths: 
       - 'manifest/**'
   
