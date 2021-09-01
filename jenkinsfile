@@ -10,7 +10,7 @@ node {
 
                def SFDC_USERNAME
 
-              
+
 
                def HUB_ORG=env.HUB_ORG_DH
 
@@ -21,7 +21,7 @@ node {
                def CONNECTED_APP_CONSUMER_KEY=env.CONNECTED_APP_CONSUMER_KEY_DH
                def TEST_KEY="Shan"
 
-              
+
 
                println 'KEY IS'
 
@@ -32,13 +32,13 @@ node {
                println SFDC_HOST
 
                println CONNECTED_APP_CONSUMER_KEY
-  
 
-              
+
+
                println env.SFDX_CLI
                def toolbelt = env.SFDX_CLI
 
-              
+
 
                stage('checkout source')
 
@@ -50,7 +50,7 @@ node {
 
                }
 
-              
+
 
                withCredentials([file(credentialsId: JWT_KEY_CRED_ID, variable: 'jwt_key_file')])
 
@@ -87,23 +87,21 @@ node {
 
                                              }
 
-                                            
+
 
                                              //need to pull out assigned username
 
                                              if(isUnix())
 
                                              {
-
                                                             rmsg = sh returnStatus: true, script: "${toolbelt} force:source:deploy -p force-app -u ${HUB_ORG} -c"
-
                                              }
 
                                              else
 
                                              {
 
-                                                           
+
                                                            rmsg = bat returnStatus: true, script: "\"${toolbelt}\" force:source:deploy -p force-app -u ${HUB_ORG} -c"
 
                                              }
@@ -122,7 +120,7 @@ node {
                                                   {
                                                        dmsg = bat returnStatus: true, script: "\"${toolbelt}\" force:source:deploy -p force-app -u ${HUB_ORG}"
                                                   }
-                                                   
+
                                              }
                                              if( dmsg != 0 )
                                              {
@@ -132,7 +130,7 @@ node {
                                              {
                                                   println('Deployment Successfull . .  . . . ')
                                              }
-											 
+
 											 println('Hello from a job DSL script')
                               }
 
