@@ -33,4 +33,8 @@ jobs:
     - name: 'Populate auth file with SFDX_URL Secret'
       run : 'echo "${{ secrets.SFDX_LR_TEST_URL }}" > /home/runner/work/authFile.json;cat /home/runner/work/authFile.json'
       shell: bash
+    - name: 'Authenticate against TrailHead org'
+      run: sfdx force:auth:sfdxurl:store -f /home/runner/work/authFile.json -s -a TrailHeadOrg
+    - name: Run Apex Test
+      run: sfdx force:apex:test:run --resultformat tap --codecoverage -c -r human
       
