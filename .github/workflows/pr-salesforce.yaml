@@ -29,5 +29,6 @@ jobs:
         ./sfdx-cli/install
  # Runs a set of commands using the runners shell
     - name: 'Populate auth file with SFDX_URL Secret'
-      run : 'echo "$PWD"'
+      run : 'echo "$PWD"; cat $PWD/.github/workflows/pr-salesforce.yaml'
       shell: bash
+      
