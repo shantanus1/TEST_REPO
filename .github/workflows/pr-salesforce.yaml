@@ -30,8 +30,4 @@ jobs:
  # Runs a set of commands using the runners shell
     - name: 'Populate auth file with SFDX_URL Secret'
       shell: bash
-	  run: 'echo ${{ secrets.SFDX_LR_TEST_URL }} > SFDX_QA'
-    - name: 'Authenticate against TrailHead org'
-      run: sfdx force:auth:sfdxurl:store -f SFDX_QA -s -a LRQA
-    - name: Run Apex Test
-      run: sfdx force:apex:test:run --resultformat tap --codecoverage -c -r human
+	  run: 'echo ${{ secrets.SFDX_LR_TEST_URL }}'
