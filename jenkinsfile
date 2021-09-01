@@ -95,7 +95,7 @@ node {
 
                                              {
 
-                                                            rmsg = sh returnStatus: true, script: "${toolbelt} force:source:deploy -p force-app -u ${HUB_ORG} -c"
+                                                            rmsg = sh returnStatus: true, script: "${toolbelt} force:source:deploy -p force-app -u ${HUB_ORG}"
 
                                              }
 
@@ -104,7 +104,7 @@ node {
                                              {
 
                                                            
-                                                           rmsg = bat returnStatus: true, script: "\"${toolbelt}\" force:source:deploy -p force-app -u ${HUB_ORG} -c"
+                                                           rmsg = bat returnStatus: true, script: "\"${toolbelt}\" force:source:deploy -p force-app -u ${HUB_ORG}"
 
                                              }
                                              if(rmsg != 0)
