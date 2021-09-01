@@ -32,7 +32,7 @@ node {
                println SFDC_HOST
 
                println CONNECTED_APP_CONSUMER_KEY
-               println TEST_KEY
+  
 
               
                println env.SFDX_CLI
@@ -95,7 +95,7 @@ node {
 
                                              {
 
-                                                            rmsg = sh returnStatus: true, script: "${toolbelt} force:mdapi:deploy -d manifest/. -u ${HUB_ORG} -c"
+                                                            rmsg = sh returnStatus: true, script: "${toolbelt} force:source:deploy -p force-app -u ${HUB_ORG} -c"
 
                                              }
 
@@ -109,12 +109,12 @@ node {
                                              }
                                              if(rmsg != 0)
                                              {
-                                                  println ('************ERROR********* Validation failed!!!!!!!!!!!!!!!!!')
+                                                  println ('************ERROR********* Deployment failed!!!!!!!!!!!!!!!!!')
                                              }
                                              else
                                              {
                                                   println rmsg
-                                                  if(isUnix())
+												  if(isUnix())
                                                   {
                                                        dmsg = sh returnStatus: true, script: "${toolbelt} force:mdapi:deploy -d manifest/. -u ${HUB_ORG}"
                                                   }
@@ -132,8 +132,8 @@ node {
                                              {
                                                   println('Deployment Successfull . .  . . . ')
                                              }
-                                             println('Hello from a job DSL script')
-
+											 
+											 println('Hello from a job DSL script')
                               }
 
                }
