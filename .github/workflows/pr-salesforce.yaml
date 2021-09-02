@@ -53,7 +53,7 @@ jobs:
     - name: Run Apex Test
       run: sfdx force:apex:test:run -l RunLocalTests --resultformat human --codecoverage -c  -u my_scratch
  #     run: sfdx force:apex:test:run --resultformat tap --codecoverage -c -r human
-    - name: Delete scratch org
+    - name: Delete  scratch org
       run: 'sfdx force:org:delete -u my_scratch --noprompt'
   auto-approve:
     needs: build-test
