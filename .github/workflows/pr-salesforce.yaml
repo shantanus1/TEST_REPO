@@ -31,9 +31,11 @@ jobs:
         ./sfdx-cli/install
  # Runs a set of commands using the runners shell
     - name: 'Populate auth file with SFDX_URL Secret'
-      env: 
-        SFDX_DEVHUB_URL: ${{ secrets.SFDX_DEVHUB_URL }}
-      run : 'echo "${{ SFDX_DEVHUB_URL }}" '
+      run : 'echo "${{ secrets.SFDX_DEVHUB_URL }}" > /home/runner/work/authFile.json;cat /home/runner/work/authFile.json '
       shell: bash
+    - name: 'Authenticate against TrailHead org'
+      run: sfdx force:auth:sfdxurl:store -f /home/runner/work/authFile.json -s -a DevHubOrg
+    - name: Run Apex Test
+      run: sfdx force:apex:test:run --resultformat tap --codecoverage -c -r human
 
       
