@@ -31,26 +31,25 @@ jobs:
         ./sfdx-cli/install
  # Runs a set of commands using the runners shell
     - name: 'Populate auth file with SFDX_URL Secret'
-      run : 'echo "${{ secrets.SFDX_DEVHUB_URL }}" > /home/runner/work/authFile.json;cat /home/runner/work/authFile.json; echo "${{ secrets.HUB_ORG_DEVHUB }}" '
+      run : 'echo "${{ secrets.SFDX_DEVHUB_URL }}" > /home/runner/work/authFile.json;cat /home/runner/work/authFile.json'
       shell: bash
     - name: 'Environment Variable Assign'
       env:
         HUB_ORG_USER: ${{ secrets.HUB_ORG_DEVHUB }}
       run: 'echo $HUB_ORG_USER'
     - name: 'Authenticate against Dev Hub org'
-      run: sfdx force:auth:sfdxurl:store -f /home/runner/work/authFile.json -d -s -a DevHubOrg --setdefaultdevhubusername
-    - name: 'Secret Data validate'
-      run: 'echo "${{ secrets.HUB_ORG_DEVHUB }}" '
-      shell: bash
+      run: sfdx force:auth:sfdxurl:store -f /home/runner/work/authFile.json -d -a DevHubOrg --setdefaultdevhubusername ; sfdx force:org:create -f config/project-scratch-def.json --setalias my_scratch --durationdays 7 --setdefaultusername --json --loglevel fatal
     - name: 'Create scratch org'
       run: sfdx force:org:create -f config/project-scratch-def.json --setalias my_scratch --durationdays 7 --setdefaultusername --json --loglevel fatal
     - name: 'Push source'
-      run: sfdx force:source:push -u my-scratch 
+      run: sfdx force:source:push -u my_scratch 
     - name: 'List orgs'
       run: sfdx force:org:list
     - name: Run Apex Test
-      run: sfdx force:apex:test:run -l RunLocalTests --resultformat tap --codecoverage -c -r human
+      run: sfdx force:apex:test:run -l RunLocalTests --resultformat tap --codecoverage -c -u my_scratch
  #     run: sfdx force:apex:test:run --resultformat tap --codecoverage -c -r human
+    - name: Delete scratch org
+      run: 'sfdx force:org:delete -u my_scratch --noprompt'
   auto-approve:
     needs: build-test
     runs-on: ubuntu-latest
