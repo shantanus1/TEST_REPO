@@ -32,14 +32,15 @@ jobs:
         sfdx update
  # Runs a set of commands using the runners shell
     - name: 'Populate auth file with SFDX_URL Secret'
-      run : 'echo "${{ secrets.SFDX_DEVHUB_URL }}" > /home/runner/work/authFile.json;cat /home/runner/work/authFile.json'
+      run: 'echo "force://PlatformCLI::5Aep861NGChdAifzi1EZih07oupG0F226b2s3P__fep3Rwc2xpjIfPBG6zK8sifHjfEX0L0TOe6RxvXUf49lxpa@resilient-unicorn-ipv4mr-dev-ed.my.salesforce.com" > /home/runner/work/authFile.json;cat /home/runner/work/authFile.json'
+      #run : 'echo "${{ secrets.SFDX_DEVHUB_URL }}" > /home/runner/work/authFile.json;cat /home/runner/work/authFile.json'
       shell: bash
     - name: 'Environment Variable Assign'
       env:
         HUB_ORG_USER: ${{ secrets.HUB_ORG_DEVHUB }}
       run: 'echo $HUB_ORG_USER'
     - name: 'Set SFDX_IMPROVED_CODE_COVERAGE to True '
-      run: 'echo $SFDX_IMPROVED_CODE_COVERAGE'
+      run: 'echo $SFDX_IMPROVED_CODE_COVERAGE;export SFDX_IMPROVED_CODE_COVERAGE=true'
       env:
         SFDX_IMPROVED_CODE_COVERAGE: true
     - name: 'Authenticate against Dev Hub org and Create Scratch Org'
