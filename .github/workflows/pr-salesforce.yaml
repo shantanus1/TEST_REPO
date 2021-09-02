@@ -36,7 +36,8 @@ jobs:
     - name: 'Authenticate against TrailHead org'
       run: sfdx force:auth:sfdxurl:store -f /home/runner/work/authFile.json -s -a DevHubOrg
     - name: Run Apex Test
-      run: sfdx force:apex:test:run --resultformat tap --codecoverage -c -r human
+      run: sfdx force:apex:test:run -l RunLocalTests --resultformat tap --codecoverage -c -r human
+ #     run: sfdx force:apex:test:run --resultformat tap --codecoverage -c -r human
   auto-approve:
     needs: build-test
     runs-on: ubuntu-latest
