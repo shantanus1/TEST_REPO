@@ -36,6 +36,9 @@ jobs:
     - name: 'Environment Variable Assign'
       env:
         HUB_ORG_USER: ${{ secrets.HUB_ORG_DEVHUB }}
+    - name: 'Set SFDX_IMPROVED_CODE_COVERAGE to True '
+      env:
+        SFDX_IMPROVED_CODE_COVERAGE: true
       run: 'echo $HUB_ORG_USER'
     - name: 'Authenticate against Dev Hub org'
       run: sfdx force:auth:sfdxurl:store -f /home/runner/work/authFile.json -d -a DevHubOrg --setdefaultdevhubusername 
@@ -47,7 +50,7 @@ jobs:
     - name: 'List orgs'
       run: sfdx force:org:list
     - name: Run Apex Test
-      run: sfdx force:apex:test:run -l RunLocalTests --resultformat tap --codecoverage -c -u my_scratch
+      run: sfdx force:apex:test:run -l RunLocalTests --resultformat human --codecoverage -c -u my_scratch
  #     run: sfdx force:apex:test:run --resultformat tap --codecoverage -c -r human
     - name: Delete scratch org
       run: 'sfdx force:org:delete -u my_scratch --noprompt'
