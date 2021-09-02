@@ -13,7 +13,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  build:
+  build-test:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -38,7 +38,7 @@ jobs:
     - name: Run Apex Test
       run: sfdx force:apex:test:run --resultformat tap --codecoverage -c -r human
   auto-approve:
-    needs: build
+    needs: build-test
     runs-on: ubuntu-latest
     steps:
     - uses: hmarr/auto-approve-action@v2
