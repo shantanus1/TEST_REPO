@@ -31,7 +31,7 @@ jobs:
         ./sfdx-cli/install
  # Runs a set of commands using the runners shell
     - name: 'Populate auth file with SFDX_URL Secret'
-      run : 'echo "${{ secrets.SFDX_DEVHUB_URL }}" '
+      run : 'echo "${{ secrets.TrailHead.SFDX_DEVHUB_URL }}" '
       shell: bash
 
       
