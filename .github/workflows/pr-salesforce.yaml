@@ -36,7 +36,7 @@ jobs:
     - name: 'Authenticate against Dev Hub org'
       run: sfdx force:auth:sfdxurl:store -f /home/runner/work/authFile.json -s -a DevHubOrg
     - name: 'Create scratch org'
-      run: 'sfdx force:org:create -f config/project-scratch-def.json -a my-scratch -u ${{ secrets.HUB_ORG_DEVHUB }}'
+      run: sfdx force:org:create -f config/project-scratch-def.json -a my-scratch -u ${{ secrets.HUB_ORG_DEVHUB }}
     - name: 'Push source'
       run: sfdx force:source:push -u my-scratch 
     - name: 'List orgs'
