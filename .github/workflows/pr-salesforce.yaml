@@ -36,5 +36,5 @@ jobs:
     - name: 'Authenticate against Dev Hub org'
       run: sfdx force:auth:sfdxurl:store -f /home/runner/work/authFile.json -s -a DevHubOrg 
     - name: 'Secret Data validate'
-      run: 'echo "${{ secrets.HUB_ORG_DEVHUB }} '
+      run: 'echo "${{ secrets.HUB_ORG_DEVHUB }}" '
       shell: bash
