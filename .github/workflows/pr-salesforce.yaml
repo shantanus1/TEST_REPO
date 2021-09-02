@@ -41,10 +41,10 @@ jobs:
       run: 'echo $SFDX_IMPROVED_CODE_COVERAGE'
       env:
         SFDX_IMPROVED_CODE_COVERAGE: true
-    - name: 'Authenticate against Dev Hub org'
-      run: sfdx force:auth:sfdxurl:store -f /home/runner/work/authFile.json -d -a DevHubOrg --setdefaultdevhubusername 
-    - name: 'Create scratch org'
-      run: sfdx force:org:create -f config/project-scratch-def.json --setalias my_scratch --durationdays 7 --setdefaultusername --json --loglevel fatal
+    - name: 'Authenticate against Dev Hub org and Create Scratch Org'
+      run: sfdx force:auth:sfdxurl:store -f /home/runner/work/authFile.json -d -a DevHubOrg --setdefaultdevhubusername  ; sfdx force:org:create -f config/project-scratch-def.json --setalias my_scratch --durationdays 7 --setdefaultusername --json --loglevel fatal
+#    - name: 'Create scratch org'
+ #     run: sfdx force:org:create -f config/project-scratch-def.json --setalias my_scratch --durationdays 7 --setdefaultusername --json --loglevel fatal
     - name: 'Push source'
 #      run: sfdx force:source:deploy -p force-app -u my_scratch --testlevel RunLocalTests -c
       run: sfdx force:source:push -u my_scratch
