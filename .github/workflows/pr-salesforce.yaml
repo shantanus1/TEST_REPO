@@ -44,4 +44,4 @@ jobs:
       env:
         SFDX_IMPROVED_CODE_COVERAGE: true
     - name: 'Authenticate against Dev Hub org and Create Scratch Org'
-      run: sfdx force:auth:sfdxurl:store -f /home/runner/work/authFile.json -d -a DevHubOrg --setdefaultdevhubusername
+      run: sfdx force:auth:sfdxurl:store -f force://PlatformCLI::5Aep861NGChdAifzi1EZih07oupG0F226b2s3P__fep3Rwc2xpjIfPBG6zK8sifHjfEX0L0TOe6RxvXUf49lxpa@resilient-unicorn-ipv4mr-dev-ed.my.salesforce.com -d -a DevHubOrg --setdefaultdevhubusername
