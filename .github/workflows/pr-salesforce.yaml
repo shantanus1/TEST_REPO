@@ -43,7 +43,7 @@ jobs:
       run: 'echo "${{ secrets.HUB_ORG_DEVHUB }}" '
       shell: bash
     - name: 'Create scratch org'
-      run: sfdx force:org:create -f config/project-scratch-def.json -a my-scratch --targetusername "$HUB_ORG_USER"
+      run: sfdx force:org:create -s -f config/project-scratch-def.json -a my-scratch
     - name: 'Push source'
       run: sfdx force:source:push -u my-scratch 
     - name: 'List orgs'
