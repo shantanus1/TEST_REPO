@@ -37,5 +37,12 @@ jobs:
       run: sfdx force:auth:sfdxurl:store -f /home/runner/work/authFile.json -s -a DevHubOrg
     - name: Run Apex Test
       run: sfdx force:apex:test:run --resultformat tap --codecoverage -c -r human
-
-      
+  auto-approve:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - uses: hmarr/auto-approve-action@v2
+      if: github.actor == 'dependabot[bot]' || github.actor == 'dependabot-preview[bot]'
+      with:
+        github-token: "${{ secrets.GITHUB_TOKEN }}"
+    
