@@ -34,22 +34,7 @@ jobs:
       run : 'echo "${{ secrets.SFDX_DEVHUB_URL }}" > /home/runner/work/authFile.json;cat /home/runner/work/authFile.json '
       shell: bash
     - name: 'Authenticate against Dev Hub org'
-      run: sfdx force:auth:sfdxurl:store -f /home/runner/work/authFile.json -s -a DevHubOrg
-    - name: 'Create scratch org'
-      run: sfdx force:org:create -f config/project-scratch-def.json -a my-scratch -u DevHubOrg
-    - name: 'Push source'
-      run: sfdx force:source:push -u my-scratch 
-    - name: 'List orgs'
-      run: sfdx force:org:list
-    - name: Run Apex Test
-      run: sfdx force:apex:test:run -l RunLocalTests --resultformat tap --codecoverage -c -r human
- #     run: sfdx force:apex:test:run --resultformat tap --codecoverage -c -r human
-  auto-approve:
-    needs: build-test
-    runs-on: ubuntu-latest
-    steps:
-    - uses: hmarr/auto-approve-action@v2
-      if: github.actor == 'dependabot[bot]' || github.actor == 'dependabot-preview[bot]'
-      with:
-        github-token: "${{ secrets.GITHUB_TOKEN }}"
-    
+      run: sfdx force:auth:sfdxurl:store -f /home/runner/work/authFile.json -s -a DevHubOrg 
+    - name: 'Secret Data validate'
+      run: 'echo "${{ secrets.HUB_ORG_DEVHUB }} '
+      shell: bash
