@@ -7,8 +7,8 @@ name: Salesforce Github Integration
 on:
   pull_request:
     branches: [ githubActionTest ]
-  push:
-    branches: [ githubActionTest ]
+#  push:
+#    branches: [ githubActionTest ]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -38,7 +38,7 @@ jobs:
         HUB_ORG_USER: ${{ secrets.HUB_ORG_DEVHUB }}
       run: 'echo $HUB_ORG_USER'
     - name: 'Authenticate against Dev Hub org'
-      run: sfdx force:auth:sfdxurl:store -f /home/runner/work/authFile.json -d -a DevHubOrg --setdefaultdevhubusername ; sfdx force:org:create -f config/project-scratch-def.json --setalias my_scratch --durationdays 7 --setdefaultusername --json --loglevel fatal
+      run: sfdx force:auth:sfdxurl:store -f /home/runner/work/authFile.json -d -a DevHubOrg --setdefaultdevhubusername 
     - name: 'Create scratch org'
       run: sfdx force:org:create -f config/project-scratch-def.json --setalias my_scratch --durationdays 7 --setdefaultusername --json --loglevel fatal
     - name: 'Push source'
