@@ -36,10 +36,11 @@ jobs:
     - name: 'Environment Variable Assign'
       env:
         HUB_ORG_USER: ${{ secrets.HUB_ORG_DEVHUB }}
+      run: 'echo $HUB_ORG_USER'
     - name: 'Set SFDX_IMPROVED_CODE_COVERAGE to True '
+      run: 'echo $SFDX_IMPROVED_CODE_COVERAGE'
       env:
         SFDX_IMPROVED_CODE_COVERAGE: true
-      run: 'echo $HUB_ORG_USER'
     - name: 'Authenticate against Dev Hub org'
       run: sfdx force:auth:sfdxurl:store -f /home/runner/work/authFile.json -d -a DevHubOrg --setdefaultdevhubusername 
     - name: 'Create scratch org'
