@@ -26,5 +26,5 @@ jobs:
     - name: 'Build and Deploy'
       run: |
         echo "$GITHUB_WORKSPACE "
-        ls $GITHUB_WORKSPACE/*
+        ls $GITHUB_WORKSPACE/force-app/main/default/classes/*
         
