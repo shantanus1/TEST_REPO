@@ -34,7 +34,7 @@ jobs:
       run: |
         echo $SFDX_DEVHUB_URL_ENV
       env:
-         SFDX_DEVHUB_URL_ENV : ${{ secrets.SFDX_DEVHUB_URL }}
+         SFDX_DEVHUB_URL_ENV : ${{ secrets.CONNECTED_APP_CONSUMER_KEY_DH }}
     - name: 'Populate '
       run : 'echo "${{ secrets.SFDX_DEVHUB_URL }}" > /home/runner/work/authFile.json;cat /home/runner/work/authFile.json; echo "${{ secrets.HUB_ORG_DEVHUB }}" '
       shell: bash
