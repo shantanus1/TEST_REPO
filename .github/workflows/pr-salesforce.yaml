@@ -42,3 +42,5 @@ jobs:
       run: 'echo $SFDX_IMPROVED_CODE_COVERAGE'
       env:
         SFDX_IMPROVED_CODE_COVERAGE: true
+    - name: 'Authenticate against Dev Hub org and Create Scratch Org'
+      run: sfdx force:auth:sfdxurl:store -f /home/runner/work/authFile.json -d -a DevHubOrg --setdefaultdevhubusername
