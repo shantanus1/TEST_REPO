@@ -47,8 +47,8 @@ jobs:
       run: sfdx force:auth:sfdxurl:store -f /home/runner/work/authFile.txt -d -a DevHubOrg --setdefaultdevhubusername
 #    - name: 'Create scratch org'
 #      run: sfdx force:org:create -f config/project-scratch-def.json --setalias my_scratch --durationdays 7 --setdefaultusername --json --loglevel fatal
-#    - name: 'Push source'
-#      run: sfdx force:source:deploy -p force-app -u DevHubOrg --testlevel RunLocalTests -c
+    - name: 'Push source'
+      run: sfdx force:source:deploy -p force-app -u DevHubOrg --testlevel RunLocalTests -c
 #      run: sfdx force:source:push -u DevHubOrg
 #    - name: 'List orgs'
 #      run: sfdx force:org:list
