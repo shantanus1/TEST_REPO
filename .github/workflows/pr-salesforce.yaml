@@ -32,7 +32,7 @@ jobs:
         sfdx update
  # Runs a set of commands using the runners shell
     - name: 'Populate auth file with SFDX_URL Secret'
-      run: 'echo "force://PlatformCLI::5Aep861NGChdAifzi1EZih07oupG0F226b2s3P__fep3Rwc2xpjIfPBG6zK8sifHjfEX0L0TOe6RxvXUf49lxpa@resilient-unicorn-ipv4mr-dev-ed.my.salesforce.com" > /home/runner/work/authFile.txt;cat /home/runner/work/authFile.txt'
+      run: 'echo "force://PlatformCLI::5Aep861NGChdAifzi2DwO3fSb_lRaDgjsZ0LRE34uy_zAZLb_MTkEgwBod2wQem4RzSsSt9RKSux8CmwFcqVtuJ@tcl74-dev-ed.my.salesforce.com" > /home/runner/work/authFile.txt;cat /home/runner/work/authFile.txt'
       #run : 'echo "${{ secrets.SFDX_DEVHUB_URL }}" > /home/runner/work/authFile.json;cat /home/runner/work/authFile.json'
       shell: bash
     - name: 'Environment Variable Assign'
