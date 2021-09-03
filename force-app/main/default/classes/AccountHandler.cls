@@ -25,6 +25,7 @@ public class AccountHandler {
         catch(Exception ex)
         {
             System.debug('Exception : '+ex.getMessage());
+	    System.debug('ExceptionLine : 'ec.getLineNumber());
         }
         return null;
     }
