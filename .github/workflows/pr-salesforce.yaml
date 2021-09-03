@@ -1,14 +1,14 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Salesforce Github Integration 
+name: Test Run before merge in SIT ORG 
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
 on:
   pull_request:
-    branches: [ feature/githubActions_v2 ]
-  push:
-    branches: [ feature/githubActions_v2 ]
+    branches: [ SIT ]
+ # push:
+  #  branches: [ SIT ]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -45,18 +45,18 @@ jobs:
         SFDX_IMPROVED_CODE_COVERAGE: true
     - name: 'Authenticate against Dev Hub org'
       run: sfdx force:auth:sfdxurl:store -f /home/runner/work/authFile.txt -d -a DevHubOrg --setdefaultdevhubusername
-#    - name: 'Create scratch org'
-#      run: sfdx force:org:create -f config/project-scratch-def.json --setalias my_scratch --durationdays 7 --setdefaultusername --json --loglevel fatal
+  #  - name: 'Create scratch org'
+   #   run: sfdx force:org:create -f config/project-scratch-def.json --setalias my_scratch --durationdays 7 --setdefaultusername --json --loglevel fatal
     - name: 'Push source'
       run: sfdx force:source:deploy -p force-app -u DevHubOrg
-#      run: sfdx force:source:push -u DevHubOrg
+#      run: sfdx force:source:push -u my_scratch
 #    - name: 'List orgs'
-#      run: sfdx force:org:list
+#     run: sfdx force:org:list
 #    - name: Run Apex Test
- #     run: sfdx force:apex:test:run -l RunLocalTests --resultformat human --codecoverage -c  -u DevHubOrg
+ #     run: sfdx force:apex:test:run -l RunLocalTests --resultformat human --codecoverage -c  -u my_scratch
  #     run: sfdx force:apex:test:run --resultformat tap --codecoverage -c -r human
-#    - name: Delete  scratch org
-#     run: 'sfdx force:org:delete -u DevHubOrg --noprompt'
+ #   - name: Delete  scratch org
+ #     run: 'sfdx force:org:delete -u my_scratch --noprompt'
   auto-approve:
     needs: build-test
     runs-on: ubuntu-latest
