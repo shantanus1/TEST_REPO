@@ -57,3 +57,11 @@ jobs:
  #     run: sfdx force:apex:test:run --resultformat tap --codecoverage -c -r human
     - name: Delete  scratch org
       run: 'sfdx force:org:delete -u my_scratch --noprompt'
+  auto-approve:
+    needs: build-test
+    runs-on: ubuntu-latest
+    steps:
+    - uses: hmarr/auto-approve-action@v2
+      if: github.actor == 'dependabot[bot]' || github.actor == 'dependabot-preview[bot]'
+      with:
+        github-token: "${{ secrets.GITHUB_TOKEN }}"
