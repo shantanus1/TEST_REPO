@@ -11,6 +11,7 @@ then
                 do
                         if [ -n "$user" ];
                         then
+                                echo "$user . . . $actionUser "
                                 if [ "$user" == "$actionUser" ];
                                 then
                                         echo "User Allowed to proceed. . ."
