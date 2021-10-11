@@ -6,7 +6,7 @@ name: Test Run before merge in SIT ORG
 # events but only for the master branch
 on:
   pull_request:
-    branches: [ SIT ]
+    branches: [ SIT-ORG ]
  # push:
   #  branches: [ SIT ]
 

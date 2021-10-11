@@ -3,7 +3,8 @@ public with sharing class AccountController {
     
         Account acc=new Account(Name='Shantanu');
         insert acc;
+        System.debug('This is for Testing');
         System.debug([SELECT Id,Name,Phone FROM Account WHERE Id=:acc.Id]);
-      return [SELECT Id,Name,Active__c FROM Account WHERE Active__c = 'Yes'];
+      return [SELECT Id,Name,Phone FROM Account WHERE Id=:acc.Id];
     }
 }

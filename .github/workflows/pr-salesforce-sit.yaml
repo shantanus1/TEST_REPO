@@ -86,7 +86,10 @@ jobs:
   #  - name: 'Create scratch org'
    #   run: sfdx force:org:create -f config/project-scratch-def.json --setalias my_scratch --durationdays 7 --setdefaultusername --json --loglevel fatal
     - name: 'Push source'
-      run: sfdx force:source:deploy -p force-app -u DevHubOrg
+      run: sfdx force:source:deploy -p force-app -u DevHubOrg -c
+   #   run: sfdx force:source:deploy -p force-app -u DevHubOrg
+   # Runs test run in SIT 
+    #  run: sfdx force:source:deploy -p force-app -u DevHubOrg --testlevel RunLocalTests -c
 #      run: sfdx force:source:push -u my_scratch
 #    - name: 'List orgs'
 #     run: sfdx force:org:list
