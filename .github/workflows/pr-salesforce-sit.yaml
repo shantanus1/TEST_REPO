@@ -24,8 +24,19 @@ jobs:
     
     # User Validation check
     - name: 'User Validation'
+      env:
+        ActionAllowedUsers: ${{ secrets.ACTION_ALLOWED_USERS }}
       run: |
         echo "${{ github.actor }}"
+        sh scripts/shell/userValidatoin.sh ${{ github.actor }} $ActionAllowedUsers
+        rc=$?;
+        if [[ $rc -eq 0 ]];
+        then
+            echo "Proceed Further . . . "
+        else
+            echo "****ERRROR**** There is some error. . Please check the log . ."
+            exit 1
+        fi
     # Runs a single command using the runners shell
     - name: 'Build and Deploy'
       run: |
