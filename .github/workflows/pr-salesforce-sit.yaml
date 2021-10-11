@@ -41,8 +41,6 @@ jobs:
                                 echo "User Allowed to proceed. . ."
                                 i=1
                                 break
-                        else
-                                echo "User not allowed to proceed further "
                         fi
                 else
                         continue
@@ -59,6 +57,7 @@ jobs:
         then
             echo "Everything fine.. Please continue . . . "
         else
+            echo "User not allowing to proceed further . . "
             exit 1
         fi
     # Runs a single command using the runners shell
