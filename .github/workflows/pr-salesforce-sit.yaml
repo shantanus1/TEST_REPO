@@ -40,6 +40,7 @@ jobs:
                         then
                                 echo "User Allowed to proceed. . ."
                                 i=1
+                                break
                         else
                                 echo "User not allowed to proceed further "
                         fi
