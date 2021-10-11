@@ -26,15 +26,38 @@ jobs:
     - name: 'User Validation'
       env:
         ActionAllowedUsers: ${{ secrets.ACTION_ALLOWED_USERS }}
+        actionUser: ${{ github.actor }}
       run: |
         echo "${{ github.actor }}"
-        sh scripts/shell/userValidatoin.sh ${{ github.actor }} $ActionAllowedUsers
-        rc=$?;
-        if [[ $rc -eq 0 ]];
+        i=0
+        if [[ -n "$actionUser" ]] && [[ -n "$ActionAllowedUsers" ]];
         then
-            echo "Proceed Further . . . "
+            for user in $(echo "$ActionAllowedUsers" | tr , '\n')
+            do
+                if [[ -n "$user" ]];
+                then
+                        if [[ "$user" == "$actionUser" ]];
+                        then
+                                echo "User Allowed to proceed. . ."
+                                i=1
+                        else
+                                echo "User not allowed to proceed further "
+                        fi
+                else
+                        continue
+                fi
+            done
         else
-            echo "****ERRROR**** There is some error. . Please check the log . ."
+            echo "Please provide proper input to proceed further "
+            i=2
+        fi
+        if [[ $i -eq 2 ]];
+        then
+            exit 101
+        elif [[ $i -eq 1 ]];
+        then
+            echo "Everything fine.. Please continue . . . "
+        else
             exit 1
         fi
     # Runs a single command using the runners shell
