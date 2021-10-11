@@ -21,7 +21,45 @@ jobs:
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
-
+    
+    # User Validation check
+    - name: 'User Validation'
+      env:
+        ActionAllowedUsers: ${{ secrets.ACTION_ALLOWED_USERS }}
+        actionUser: ${{ github.actor }}
+      run: |
+        echo "${{ github.actor }}"
+        i=0
+        if [[ -n "$actionUser" ]] && [[ -n "$ActionAllowedUsers" ]];
+        then
+            for user in $(echo "$ActionAllowedUsers" | tr , '\n')
+            do
+                if [[ -n "$user" ]];
+                then
+                        if [[ "$user" == "$actionUser" ]];
+                        then
+                                echo "User Allowed to proceed. . ."
+                                i=1
+                        else
+                                echo "User not allowed to proceed further "
+                        fi
+                else
+                        continue
+                fi
+            done
+        else
+            echo "Please provide proper input to proceed further "
+            i=2
+        fi
+        if [[ $i -eq 2 ]];
+        then
+            exit 101
+        elif [[ $i -eq 1 ]];
+        then
+            echo "Everything fine.. Please continue . . . "
+        else
+            exit 1
+        fi
     # Runs a single command using the runners shell
     - name: 'Build and Deploy'
       run: |
