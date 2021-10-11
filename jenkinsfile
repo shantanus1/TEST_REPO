@@ -8,9 +8,7 @@ node {
 
                def RUN_ARTIFACT_DIR="tests/{BUILD_NUMBER}"
 
-               def SFDC_USERNAME
-
-	
+               def SFDC_USERNAME	
 
                def HUB_ORG=env.HUB_ORG_DH
 
