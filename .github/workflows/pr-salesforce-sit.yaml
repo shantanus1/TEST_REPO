@@ -21,7 +21,11 @@ jobs:
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
-
+    
+    # User Validation check
+    - name: 'User Validation'
+      run: |
+        echo "${{ github.actor }}"
     # Runs a single command using the runners shell
     - name: 'Build and Deploy'
       run: |
