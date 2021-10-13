@@ -20,13 +20,13 @@ node {
 
                def CONNECTED_APP_CONSUMER_KEY=env.CONNECTED_APP_CONSUMER_KEY_DH
                def TEST_KEY="Shan"
-	       def ActionAllowedUsers = "${{ secrets.ACTION_ALLOWED_USERS }}"
-               def actionUser = "[[$class: 'DevelopersRecipientProvider']]"
-	       def actionUser2 = bat(script: "git --no-pager show -s --format='%%ae'", returnStdout: true).split('\r\n')[2].trim()"
+	       //def ActionAllowedUsers = "${{ secrets.ACTION_ALLOWED_USERS }}"
+               //def actionUser = "[[$class: 'DevelopersRecipientProvider']]"
+	       //def actionUser2 = bat(script: "git --no-pager show -s --format='%%ae'", returnStdout: true).split('\r\n')[2].trim()"
 
-		println ActionAllowedUsers
-		println actionUser
-		println actionUser2
+		//println ActionAllowedUsers
+		//println actionUser
+		//println actionUser2
                println 'KEY IS'
 
                println JWT_KEY_CRED_ID
@@ -37,7 +37,7 @@ node {
 
                println CONNECTED_APP_CONSUMER_KEY
 
-		error('Oh||| Exit ')
+		//error('Oh||| Exit ')
 
                println env.SFDX_CLI
                def toolbelt = env.SFDX_CLI
@@ -62,7 +62,7 @@ node {
 
                               stage('Deploy Code')
 
-                              {
+		       {
 
                                              if(isUnix())
 
@@ -79,7 +79,21 @@ node {
                                                             rc = bat returnStatus: true, script: "\"${toolbelt}\" force:auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile \"${jwt_key_file}\" --setdefaultdevhubusername --instanceurl ${SFDC_HOST}"
 
                                              }
+					     echo "${GIT_BRANCH}"
 
+						echo "${GIT_URL}"
+
+						echo "${GIT_COMMIT}"
+			       			echo "${GIT_COMMITTER_EMAIL}"
+
+						echo "${GIT_COMMITTER_NAME}"
+
+						echo "${GIT_AUTHOR_EMAIL}"
+
+						echo "${GIT_AUTHOR_NAME}"   
+
+						echo "${GIT_USER}"
+			       			error('Oh||| Exit ')
                                              println rc
                                              println rcU1
 
