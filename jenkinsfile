@@ -20,8 +20,8 @@ node {
 
                def CONNECTED_APP_CONSUMER_KEY=env.CONNECTED_APP_CONSUMER_KEY_DH
                def TEST_KEY="Shan"
-	       def ActionAllowedUsers = ${{ secrets.ACTION_ALLOWED_USERS }}
-               def actionUser = [[$class: 'DevelopersRecipientProvider']]
+	       def ActionAllowedUsers = "${{ secrets.ACTION_ALLOWED_USERS }}"
+               def actionUser = "[[$class: 'DevelopersRecipientProvider']]"
 	       def actionUser2 = bat(script: "git --no-pager show -s --format='%%ae'", returnStdout: true).split('\r\n')[2].trim()"
 
 		println ActionAllowedUsers
