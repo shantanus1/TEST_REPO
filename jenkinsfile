@@ -30,6 +30,20 @@ node {
 		println getGitBranchName()
 		println commiterDetails
 		println commiter
+	
+def commiterDetails = bat ( 
+    script: 'git --no-pager show -s --format=%%ae', 
+    returnStdout: true
+)
+
+def commiter = extractCommiterEmail(commiterDetails)
+
+def extractCommiterEmail(details) {
+    
+    def arr = details.tokenize('\n')
+    def email = arr[2].trim()
+    return email
+}
                println 'KEY IS'
 
                println JWT_KEY_CRED_ID
@@ -144,23 +158,6 @@ node {
                               }
 
                }
-	def getGitBranchName() {
-    return scm.branches[0].name
-	}
-	
-def commiterDetails = bat ( 
-    script: 'git --no-pager show -s --format=%%ae', 
-    returnStdout: true
-)
-
-def commiter = extractCommiterEmail(commiterDetails)
-
-def extractCommiterEmail(details) {
-    
-    def arr = details.tokenize('\n')
-    def email = arr[2].trim()
-    return email
-}
 
 }
 
