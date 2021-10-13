@@ -27,6 +27,9 @@ node {
 		//println ActionAllowedUsers
 		//println actionUser
 		//println actionUser2
+		println getGitBranchName()
+		println commiterDetails
+		println commiter
                println 'KEY IS'
 
                println JWT_KEY_CRED_ID
@@ -37,7 +40,7 @@ node {
 
                println CONNECTED_APP_CONSUMER_KEY
 
-		//error('Oh||| Exit ')
+		error('Oh||| Exit ')
 
                println env.SFDX_CLI
                def toolbelt = env.SFDX_CLI
@@ -64,35 +67,23 @@ node {
 
 		       {
 
-                                             if(isUnix())
+                                           //  if(isUnix())
 
-                                             {
+                                            // {
 
-                                                            rc = sh returnStatus: true, script: "${toolbelt} force:auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile ${jwt_key_file} --setdefaultdevhubusername --instanceurl ${SFDC_HOST}"
+                                              //              rc = sh returnStatus: true, script: "${toolbelt} force:auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile ${jwt_key_file} --setdefaultdevhubusername --instanceurl ${SFDC_HOST}"
 
-                                             }
+                                            // }
 
-                                             else
+                                            // else
 
-                                             {
-                                                            rcU1 = bat returnStatus: true, script: "\"${toolbelt}\" update"
-                                                            rc = bat returnStatus: true, script: "\"${toolbelt}\" force:auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile \"${jwt_key_file}\" --setdefaultdevhubusername --instanceurl ${SFDC_HOST}"
+                                            // {
+                                            //                rcU1 = bat returnStatus: true, script: "\"${toolbelt}\" update"
+                                            //                rc = bat returnStatus: true, script: "\"${toolbelt}\" force:auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile \"${jwt_key_file}\" --setdefaultdevhubusername --instanceurl ${SFDC_HOST}"
 
-                                             }
-					     echo "${GIT_BRANCH}"
-
-						echo "${GIT_URL}"
-
-						echo "${GIT_COMMIT}"
-			       			echo "${GIT_COMMITTER_EMAIL}"
-
-						echo "${GIT_COMMITTER_NAME}"
-
-						echo "${GIT_AUTHOR_EMAIL}"
-
-						echo "${GIT_AUTHOR_NAME}"   
-
-						echo "${GIT_USER}"
+                                           //  }
+			       			foo=$(git show -s --pretty=%an)
+			       			println foo
 			       			error('Oh||| Exit ')
                                              println rc
                                              println rcU1
@@ -153,5 +144,23 @@ node {
                               }
 
                }
+	def getGitBranchName() {
+    return scm.branches[0].name
+	}
+	
+def commiterDetails = bat ( 
+    script: 'git --no-pager show -s --format=%%ae', 
+    returnStdout: true
+)
+
+def commiter = extractCommiterEmail(commiterDetails)
+
+def extractCommiterEmail(details) {
+    
+    def arr = details.tokenize('\n')
+    def email = arr[2].trim()
+    return email
+}
 
 }
+
