@@ -1,0 +1,77 @@
+name: Deploy to Amazon Secret Manager
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+      branches: [ main ]
+
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    environment: production
+
+
+    steps:
+    # User Validation check
+    - name: 'User Validation'
+      env:
+      ActionAllowedUsers: ${{ secrets.ACTION_ALLOWED_USERS }}
+      actionUser: ${{ github.actor }}
+      run: |
+        echo "${{ github.actor }}"
+        i=0
+        if [[ -n "$actionUser" ]] && [[ -n "$ActionAllowedUsers" ]];
+        then
+          for user in $(echo "$ActionAllowedUsers" | tr , '\n')
+          do
+          if [[ -n "$user" ]];
+          then
+            if [[ "$user" == "$actionUser" ]];
+            then
+              echo "User Allowed to proceed. . ."
+              i=1
+            else
+              echo "User not allowed to proceed further "
+            fi
+          else
+            continue
+          fi
+          done
+        else
+          echo "Didn't get the user details from secret. . .  "
+          i=2
+        fi
+        if [[ $i -eq 2 ]];
+        then
+          exit 101
+        elif [[ $i -eq 1 ]];
+        then
+          echo "Everything fine.. Please continue . . . "
+        else
+          exit 1
+        fi
+       - name: Configure AWS credentials from Test account
+         run: |
+         echo "inside loop"
+
+     # - name: Configure AWS credentials from Test account
+     #   env:
+     #     PROFILE_ARN: ${{ secrets.AWS_PROFILE_ARN }}
+     #     PROFILE_NAME: ${{ secrets.AWS_PROFILE_NAME }}
+     #     AWS_DEFAULT_REGION: 'ap-south-1'
+     # 
+     #   uses: aws-actions/configure-aws-credentials@v1
+     #   with:
+     #     role-to-assume: $PROFILE_ARN/$PROFILE_NAME
+     #     aws-region: $AWS_DEFAULT_REGION
+     # 
+     # - name: Upload secret file to aws secret manager
+     #   env:
+     #     file_name: ${{ secrets.SECRET_FILE_NAME }}
+     #     KMS_KEY: ${{ secrets.AWSSECRETKMS }}
+     #     run: |
+     #       aws secretsmanager create-secret --name production/DBCredentialsSecret --secret-string file://$file_name --kms-key-id $KMS_KEY
