@@ -7,6 +7,9 @@ name: Test Run before merge in SIT ORG
 on:
   pull_request:
     branches: [ SIT ]
+  push:
+    branches:
+      - SIT
  # push:
   #  branches: [ SIT ]
 
