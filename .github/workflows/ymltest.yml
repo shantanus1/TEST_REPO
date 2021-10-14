@@ -54,9 +54,9 @@ jobs:
         else
           exit 1
         fi
-       - name: Configure AWS credentials from Test account
-         run: |
-         echo "inside loop"
+        - name: Configure AWS credentials from Test account
+          run: |
+            echo "inside loop"
 
      # - name: Configure AWS credentials from Test account
      #   env:
