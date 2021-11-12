@@ -10,8 +10,7 @@ public class AccountHandler {
              	acc.Name = name;
                 insert acc;
                 record = [select id,Name from Account where Id = :acc.Id];
-                return record;
-		    
+                return record;    
             }
             else
             {
