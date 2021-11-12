@@ -11,6 +11,7 @@ public class AccountHandler {
                 insert acc;
                 record = [select id,Name from Account where Id = :acc.Id];
                 return record;
+		    
             }
             else
             {
