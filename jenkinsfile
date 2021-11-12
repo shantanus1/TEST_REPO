@@ -25,6 +25,7 @@ node {
 	       //def actionUser2 = bat(script: "git --no-pager show -s --format='%%ae'", returnStdout: true).split('\r\n')[2].trim()"
 
 		//println ActionAllowedUsers
+	
 		//println actionUser
 		//println actionUser2
 	
