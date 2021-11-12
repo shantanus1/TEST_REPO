@@ -8,6 +8,7 @@
 		<members>*</members>
 		<name>AnimationRule</name>
 	</types>
+	
 	<types>
 		<members>*</members>
 		<name>ApexClass</name>
