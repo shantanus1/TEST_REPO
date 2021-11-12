@@ -27,6 +27,7 @@ node {
 		//println ActionAllowedUsers
 		//println actionUser
 		//println actionUser2
+	
 		println getGitBranchName()
 		println commiterDetails
 		println commiter
