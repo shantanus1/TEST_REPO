@@ -1,0 +1,113 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+pr:
+  autoCancel: "true"
+  branches:
+    include:
+    - DEV1
+    - UAT1
+    - main
+  paths:
+    exclude:
+    - README.md
+    - azure-pipelines.yml
+stages:
+- stage: DEV1
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/DEV1'))
+  jobs:
+  - job: DeployDevGx
+    steps:
+      - task: NodeTool@0
+        inputs:
+          versionSpec: '14.x'
+          checkLatest: true
+      - bash: 
+          npm install sfdx-cli --global
+        displayName: Install Salesforce CLI
+      - bash:
+            sfdx config:set restDeploy=false --global
+        displayName: Use SOAP API for Deployment
+      - bash:
+            echo y | sfdx plugins:install sfdx-git-delta
+        displayName: Install SFDX Git Delta
+      - bash:
+            echo "$PWD"
+            git config --global --add safe.directory $PWD
+        displayName: Safe directory declare
+      - bash:
+            sfdx sgd:source:delta --to "HEAD" --from "473045ed6eec4000bf0e1c0d6b666ec61d133f4f" --output . -a 55
+        displayName: Generate DEV Deployment Package    
+      - script:
+            cat package/package.xml
+        displayName: Display DEV Deployment Package 
+      - bash:
+            sfdx force:auth:jwt:grant --clientid $(salesforceDevGxOrgClientId) --jwtkeyfile ./bin/server.key --username $(salesforceDevGxOrgUserName) --instanceurl $(salesforceSandboxInstanceURL) -a devGxOrg
+        displayName: Authorize Salesforce DevGx Org
+      - bash:
+            sfdx force:source:deploy -x package/package.xml -u devGxOrg -w 10
+        displayName: Deploy source code to DevGx Org
+- stage: UAT
+  dependsOn: []
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/UAT'))
+  jobs:
+  - job: DeployUAT
+    steps:
+      - task: NodeTool@0
+        inputs:
+          versionSpec: '14.x'
+          checkLatest: true
+      - bash: 
+          npm install sfdx-cli --global
+        displayName: Install Salesforce CLI
+      - bash:
+            sfdx config:set restDeploy=false --global
+        displayName: Use SOAP API for Deployment
+      - bash:
+            echo y | sfdx plugins:install sfdx-git-delta
+        displayName: Install SFDX Git Delta
+      - bash:
+            sfdx sgd:source:delta --to "HEAD" --from "473045ed" --output .
+        displayName: Generate UAT2 Deployment Package
+      - script:
+            cat package/package.xml
+        displayName: Display UAT2 Deployment Package
+      - bash:
+            sfdx force:auth:jwt:grant --clientid $(salesforceUATOrgClientId) --jwtkeyfile ./config/UAT/DevOps_Cert/server.key --username $(salesforceUATOrgUserName) --instanceurl $(salesforceSandboxInstanceURL) -a uatOrg
+        displayName: Authorize Salesforce UAT2 Org
+      - bash:
+            sfdx force:source:deploy -x package/package.xml -u uatOrg -w 10
+        displayName: Deploy source code to UAT2 Org
+- stage: Prod
+  dependsOn: []
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+  jobs:
+  - job: DeployProd
+    steps:
+      - task: NodeTool@0
+        inputs:
+          versionSpec: '14.x'
+          checkLatest: true
+      - bash: 
+          npm install sfdx-cli --global
+        displayName: Install Salesforce CLI
+      - bash:
+            sfdx config:set restDeploy=false --global
+        displayName: Use SOAP API for Deployment
+      - bash:
+            echo y | sfdx plugins:install sfdx-git-delta
+        displayName: Install SFDX Git Delta
+      - bash:
+            sfdx sgd:source:delta --to "HEAD" --from "4ce1d39" --output .
+        displayName: Generate PROD Deployment Package
+      - script:
+            cat package/package.xml
+        displayName: Display PROD Deployment Package
+      - bash:
+            sfdx force:auth:jwt:grant --clientid $(salesforceProdOrgClientId) --jwtkeyfile ./config/PROD/DevOps_Cert/server.key --username $(salesforceProdOrgUserName) --instanceurl $(salesforceProdInstanceURL) -a prodOrg
+        displayName: Authorize Salesforce Production Org
+      - bash:
+            sfdx force:source:deploy -x package/package.xml -l RunLocalTests -c -u prodOrg -w 10
+        displayName: Run validation only on source code to Production Org, if successful you can Quick Deploy directly from Production UI (Setup --> Deployment Status)
